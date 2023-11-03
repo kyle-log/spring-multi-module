@@ -1,36 +1,82 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
+    kotlin("jvm") version "1.9.10"
+    kotlin("plugin.spring") version "1.9.10"
+
     id("org.springframework.boot") version "3.1.5"
     id("io.spring.dependency-management") version "1.1.3"
-    kotlin("jvm") version "1.8.22"
-    kotlin("plugin.spring") version "1.8.22"
 }
 
-group = "com.cocomo"
-version = "0.0.1-SNAPSHOT"
+allprojects {
+    group = "com.cocomo"
+    version = "0.1.0"
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
-}
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    implementation("org.springframework.boot:spring-boot-starter")
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-}
-
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        freeCompilerArgs += "-Xjsr305=strict"
-        jvmTarget = "17"
+    repositories {
+        mavenCentral()
     }
 }
 
-tasks.withType<Test> {
-    useJUnitPlatform()
+subprojects {
+    apply {
+        plugin("base")
+        plugin("kotlin")
+        plugin("kotlin-spring")
+        plugin("io.spring.dependency-management")
+        plugin("idea")
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom("org.springframework.boot:spring-boot-dependencies:3.1.3")
+        }
+    }
+
+    dependencies {
+        implementation("org.jetbrains.kotlin:kotlin-reflect")
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    }
+
+
+    tasks.withType<KotlinCompile> {
+        kotlinOptions {
+            freeCompilerArgs = listOf("-Xjsr305=strict")
+            jvmTarget = "17"
+        }
+    }
+
+    tasks.withType<Test> {
+        useJUnitPlatform()
+    }
+}
+
+project("service-order") {
+}
+
+project("app-api") {
+    apply(plugin = "org.springframework.boot")
+
+    dependencies {
+        implementation(project(":service-order"))
+
+        implementation("org.springframework.boot:spring-boot-starter-web")
+    }
+
+    springBoot {
+        buildInfo()
+    }
+
+    tasks.jar {
+        enabled = true
+    }
+    tasks.bootJar {
+        enabled = true
+    }
+}
+
+tasks.jar {
+    enabled = false
+}
+tasks.bootJar {
+    enabled = false
 }

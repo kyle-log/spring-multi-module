@@ -1,11 +1,11 @@
-package com.cocomo
+package com.cocomo.api
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class SpringMultiModuleTemplateApplication
+class AppApiApplication
 
 fun main(args: Array<String>) {
-    runApplication<SpringMultiModuleTemplateApplication>(*args)
+    runApplication<AppApiApplication>(*args)
 }
