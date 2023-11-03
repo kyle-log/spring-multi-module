@@ -59,9 +59,22 @@ project("lib-context") {
     }
 }
 
+project("platform-target") {
+    dependencies {
+        api(project(":lib-context"))
+    }
+}
+
+project("platform-adapter") {
+    dependencies {
+        api(project(":platform-target"))
+    }
+}
+
 project("service-order") {
     dependencies {
         api(project(":lib-context"))
+        api(project(":platform-target"))
     }
 }
 
@@ -70,6 +83,7 @@ project("app-api") {
 
     dependencies {
         implementation(project(":service-order"))
+        implementation(project(":platform-adapter"))
 
         implementation("org.springframework.boot:spring-boot-starter-web")
     }
