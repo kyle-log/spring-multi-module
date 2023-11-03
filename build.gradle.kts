@@ -50,7 +50,19 @@ subprojects {
     }
 }
 
+project("lib-common") {
+}
+
+project("lib-context") {
+    dependencies {
+        api(project(":lib-common"))
+    }
+}
+
 project("service-order") {
+    dependencies {
+        api(project(":lib-context"))
+    }
 }
 
 project("app-api") {

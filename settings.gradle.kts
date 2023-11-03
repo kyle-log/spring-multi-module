@@ -7,6 +7,12 @@ pluginManagement {
 
 rootProject.name = "spring-multi-module-template"
 
+// library
+include("lib-common")
+project(":lib-common").projectDir = file("library/lib-common")
+include("lib-context")
+project(":lib-context").projectDir = file("library/lib-context")
+
 // service
 include("service-order")
 project(":service-order").projectDir = file("service/service-order")
