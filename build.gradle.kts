@@ -74,6 +74,48 @@ project("app-api") {
     }
 }
 
+project("app-worker") {
+    apply(plugin = "org.springframework.boot")
+
+    dependencies {
+        implementation(project(":service-order"))
+
+        implementation("org.springframework.boot:spring-boot-starter-web")
+    }
+
+    springBoot {
+        buildInfo()
+    }
+
+    tasks.jar {
+        enabled = true
+    }
+    tasks.bootJar {
+        enabled = true
+    }
+}
+
+project("app-batch") {
+    apply(plugin = "org.springframework.boot")
+
+    dependencies {
+        implementation(project(":service-order"))
+
+        implementation("org.springframework.boot:spring-boot-starter-web")
+    }
+
+    springBoot {
+        buildInfo()
+    }
+
+    tasks.jar {
+        enabled = true
+    }
+    tasks.bootJar {
+        enabled = true
+    }
+}
+
 tasks.jar {
     enabled = false
 }
