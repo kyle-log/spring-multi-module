@@ -78,11 +78,19 @@ project("service-order") {
     }
 }
 
+project("service-pay") {
+    dependencies {
+        api(project(":lib-context"))
+        api(project(":platform-target"))
+    }
+}
+
 project("app-api") {
     apply(plugin = "org.springframework.boot")
 
     dependencies {
         implementation(project(":service-order"))
+        implementation(project(":service-pay"))
         implementation(project(":platform-adapter"))
 
         implementation("org.springframework.boot:spring-boot-starter-web")
@@ -105,6 +113,8 @@ project("app-worker") {
 
     dependencies {
         implementation(project(":service-order"))
+        implementation(project(":service-pay"))
+        implementation(project(":platform-adapter"))
 
         implementation("org.springframework.boot:spring-boot-starter-web")
     }
@@ -126,6 +136,8 @@ project("app-batch") {
 
     dependencies {
         implementation(project(":service-order"))
+        implementation(project(":service-pay"))
+        implementation(project(":platform-adapter"))
 
         implementation("org.springframework.boot:spring-boot-starter-web")
     }

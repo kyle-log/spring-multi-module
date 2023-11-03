@@ -22,6 +22,8 @@ project(":platform-adapter").projectDir = file("platform/platform-adapter")
 // service
 include("service-order")
 project(":service-order").projectDir = file("service/service-order")
+include("service-pay")
+project(":service-pay").projectDir = file("service/service-pay")
 
 // app
 include("app-api")
