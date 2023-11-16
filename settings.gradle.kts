@@ -5,7 +5,7 @@ pluginManagement {
     }
 }
 
-rootProject.name = "spring-multi-module-template"
+rootProject.name = "spring-multi-module"
 
 // library
 include("lib-common")
